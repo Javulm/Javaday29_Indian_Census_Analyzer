@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 public class IndianStateCensusAnalyzer {
     private static final String CSV_FILE_PATH= "C:\\Users\\javul\\Desktop\\classwork\\indianstatecensusanalyzer\\src\\main\\resources\\IndiaStateCensusData.csv";
-    public static int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
+    public static int loadIndiaCensusData(String csvFilePath) {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
             CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
@@ -26,19 +26,14 @@ public class IndianStateCensusAnalyzer {
             }
             return numOfEntries;
         } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+             e.printStackTrace();
+              return 0;
         }
     }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Indian State Census Analyser");
-        int numOfEntries;
-        try {
-            numOfEntries = IndianStateCensusAnalyzer.loadIndiaCensusData(CSV_FILE_PATH);
-        } catch (CensusAnalyserException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(numOfEntries);
+        int numOfEntries = IndianStateCensusAnalyzer.loadIndiaCensusData(CSV_FILE_PATH);
+        System.out.println("Number of entries in the file: " + numOfEntries);
     }
 }
